@@ -2,7 +2,11 @@ import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 
 class ReviewScreen extends Component {
-  state = {}
+  // class property
+  static navigationOptions = {
+    title: 'Review Jobs',
+    headerRight: <Text>Go right</Text>
+  }
   render() {
     return (
       <View>
