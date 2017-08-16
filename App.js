@@ -1,9 +1,10 @@
-import Expo, { Constants } from 'expo';
+import Expo, { Notifications } from 'expo';
 import React from 'react';
-import { StyleSheet, Text, View, Platform } from 'react-native';
+import { StyleSheet, View, Platform, Alert, AsyncStorage } from 'react-native';
 import { TabNavigator, StackNavigator } from 'react-navigation';
 import { Provider } from 'react-redux';
 
+import registerForNotifications from './services/push_notifications';
 import store from './store';
 
 import AuthScreen from './screens/AuthScreen';
@@ -15,6 +16,22 @@ import ReviewScreen from './screens/ReviewScreen';
 
 
 class App extends React.Component {
+  async componentDidMount() {
+    // await AsyncStorage.removeItem('pushtoken');
+    registerForNotifications();
+    Notifications.addListener((notification) => {
+      const { data: { text }, origin } = notification; // notification.data.text, notification.origin
+
+      if (origin === 'received' && text) {
+        Alert.alert(
+          'New Push Notification',
+          text,
+          [{ text: 'Ok' }]
+        );
+      }
+    });
+  }
+
   render() {
     const MainNavigator = TabNavigator({
       welcome: { screen: WelcomeScreen },
