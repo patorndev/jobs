@@ -29,9 +29,15 @@ class App extends React.Component {
               settings: { screen: SettingScreen },
             })
           }
+        }, {
+          tabBarPosition: 'bottom',
+          tabBarOptions: {
+            labelStyle: { fontSize: 12 }
+          }
         })
       }
     }, {
+      backBehavior: 'none',
       navigationOptions: {
         tabBarVisible: false
       },
